@@ -1,9 +1,10 @@
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.net.Socket
 
-fun main(Args:Array<String>)
+fun main()
 {
     val SocketServer=thread()
     SocketServer.start()
@@ -17,7 +18,7 @@ class thread:Thread()
         var count=0
         while(true)
         {
-            var SocketClient=socket.accept()
+            val SocketClient=socket.accept()
             count++
             println("新的用戶已連線!    目前有${count}位客人")
             Thread{
@@ -25,7 +26,7 @@ class thread:Thread()
                 {
                     val input = SocketClient?.getInputStream()
                     val reader = BufferedReader(InputStreamReader(input))
-                    var data=reader.readLine()
+                    val data=reader.readLine()
                     if (data==null)
                     {
                         count--
@@ -35,6 +36,7 @@ class thread:Thread()
                     else
                     {
                         println(data)
+                        File("data.txt").writeText(data)
                     }
                 }
 
