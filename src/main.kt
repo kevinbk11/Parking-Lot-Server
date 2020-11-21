@@ -4,7 +4,7 @@ import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.net.Socket
 
-fun main()
+fun main(args:Array<String>)
 {
     val SocketServer=thread()
     SocketServer.start()
