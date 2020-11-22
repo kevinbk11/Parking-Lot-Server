@@ -3,6 +3,7 @@ import java.io.File
 import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.net.Socket
+import java.net.SocketAddress
 
 fun main(args:Array<String>)
 {
@@ -14,8 +15,9 @@ class thread:Thread()
 {
     override fun run()
     {
-        val socket = ServerSocket(2333)
+        val socket = ServerSocket(5005)
         var count=0
+        println("Server Start!")
         while(true)
         {
             val SocketClient=socket.accept()
