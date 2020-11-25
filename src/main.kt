@@ -1,6 +1,7 @@
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
 import java.net.SocketAddress
@@ -21,24 +22,47 @@ class thread:Thread()
         while(true)
         {
             val SocketClient=socket.accept()
-            count++
-            println("新的用戶已連線!    目前有${count}位客人")
+            print("已連線")
             Thread{
-                while(true)
+
+                val input = SocketClient?.getInputStream()
+                val reader = BufferedReader(InputStreamReader(input))
+                val output=SocketClient.getOutputStream()
+                var writer=PrintWriter(output,true)
+                var data=reader.readLine()
+                if (data==null)
                 {
-                    val input = SocketClient?.getInputStream()
-                    val reader = BufferedReader(InputStreamReader(input))
-                    val data=reader.readLine()
-                    if (data==null)
+
+                }
+                else
+                {
+                    data=data.toUpperCase()
+                    var file=File("data.txt")
+                    if(file.readText()=="")
                     {
-                        count--
-                        println("有客戶斷開連線!    目前有${count}位客人")
-                        break
+                        file.appendText(data)
                     }
                     else
                     {
-                        println(data)
-                        File("data.txt").writeText(data)
+                        file.appendText(" "+data)
+                    }
+
+                    var array=file.readText().split(" ")
+                    var YourNumber=array.size
+                    writer.println(YourNumber)
+                    while(YourNumber!=1)
+                    {
+                        Thread.sleep(500)
+                        var dequeue=file.readText().split(" ")
+                        for(x in 0..dequeue.size-1)
+                        {
+                            if(dequeue[x]==data)
+                            {
+                                YourNumber=x+1
+                                writer.println(YourNumber)
+                                break
+                            }
+                        }
                     }
                 }
 
