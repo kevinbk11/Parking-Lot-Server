@@ -12,6 +12,9 @@ fun main(args:Array<String>)
     SocketServer.start()
 
 }
+
+
+
 class thread:Thread()
 {
     override fun run()
@@ -52,7 +55,7 @@ class thread:Thread()
                     writer.println(YourNumber)
                     while(YourNumber!=1)
                     {
-                        Thread.sleep(500)
+
                         var dequeue=file.readText().split(" ")
                         for(x in 0..dequeue.size-1)
                         {
@@ -63,6 +66,7 @@ class thread:Thread()
                                 break
                             }
                         }
+                        Thread.sleep(100)
                     }
                 }
 
